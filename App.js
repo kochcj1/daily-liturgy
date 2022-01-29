@@ -17,8 +17,10 @@ async function wait() {
   await new Promise(resolve => setTimeout(resolve, 1000));
 };
 
-const PrayerAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" icon={require('./assets/icons8-pray-64.png')} />
-const BibleAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" icon={require('./assets/icons8-holy-bible-60.png')} />
+const BaseAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" />
+const PrayerAvatar = props => <BaseAvatar {...props} icon={require('./assets/icons8-pray-64.png')} />
+const ReadingAvatar = props => <BaseAvatar {...props} icon={require('./assets/icons8-holy-bible-60.png')} />
+const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('./assets/icons8-gift-96.png')} />
 
 export default function App() {
   const [appLoaded, setAppLoaded] = useState(false);
@@ -47,7 +49,7 @@ export default function App() {
               </Card>
               <View style={styles.verticalSpacer} />
               <Card>
-                <Card.Title title="Old Testament Reading" subtitle="Proverbs 23" subtitleStyle={styles.subtitleStyle} left={BibleAvatar} />
+                <Card.Title title="Old Testament Reading" subtitle="Proverbs 23" subtitleStyle={styles.subtitleStyle} left={ReadingAvatar} />
                 <Card.Actions style={styles.readingActions}>
                   <Button onPress={() => console.log("Open to this passage")} color="#8f6b50">Read</Button>
                 </Card.Actions>
@@ -61,7 +63,7 @@ export default function App() {
               </Card>
               <View style={styles.verticalSpacer} />
               <Card>
-                <Card.Title title="New Testament Reading" subtitle="Luke 4:21-30" subtitleStyle={styles.subtitleStyle} left={BibleAvatar} />
+                <Card.Title title="New Testament Reading" subtitle="Luke 4:21-30" subtitleStyle={styles.subtitleStyle} left={ReadingAvatar} />
                 <Card.Actions style={styles.readingActions}>
                   <Button onPress={() => console.log("Open to this passage")} color="#8f6b50">Read</Button>
                 </Card.Actions>
@@ -75,7 +77,7 @@ export default function App() {
               </Card>
               <View style={styles.verticalSpacer} />
               <Card>
-                <Card.Title title="Psalm Reading" subtitle="Psalm 111" subtitleStyle={styles.subtitleStyle} left={BibleAvatar} />
+                <Card.Title title="Psalm Reading" subtitle="Psalm 111" subtitleStyle={styles.subtitleStyle} left={ReadingAvatar} />
                 <Card.Actions style={styles.readingActions}>
                   <Button onPress={() => console.log("Open to this passage")} color="#8f6b50">Read</Button>
                 </Card.Actions>
@@ -89,7 +91,7 @@ export default function App() {
               </Card>
               <View style={styles.verticalSpacer} />
               <Card>
-                <Card.Title title="Benediction" left={PrayerAvatar} />
+                <Card.Title title="Benediction" left={BenedictionAvatar} />
                 <Card.Content>
                   <Paragraph>And now may the grace of the Lord Jesus Christ, and the love of God, and the fellowship of the Holy Spirit, be with us now and always, until the day of Christ's return.</Paragraph>
                 </Card.Content>
