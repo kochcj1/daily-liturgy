@@ -6,8 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/Daily_Liturgy_Logo.png",
       "backgroundColor": "#ffffff"
     },
     "updates": {
