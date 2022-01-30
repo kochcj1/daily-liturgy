@@ -9,9 +9,9 @@ const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('../asse
 
 export default function HomeScreen({ navigation }) {
 	const openScripture = (passage, url) => {
-		navigation.navigate("Scripture", {
-			scripturePassage: passage,
-			scriptureURL: url
+		navigation.navigate("Web", {
+			title: passage,
+			url: url
 		});
 	};
 

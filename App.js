@@ -8,10 +8,11 @@ import LiturgyNavigator from './components/LiturgyNavigator'
 // - icons8 licensing
 // - Pull in data from the internet, making sure to handle lack of internet connection
 // - Handle other screen sizes and types (e.g. tablets, without fancy status bar, etc.)
+// - Publish the app (with app icon)
 
 // Log:
 // - Jan 28, 2022: 2.5 hours
-// - Jan 29, 2022: 2.5 hours
+// - Jan 29, 2022: 3 hours
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",

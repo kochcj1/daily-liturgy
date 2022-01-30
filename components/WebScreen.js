@@ -6,10 +6,10 @@ function LoadingIndicatorView() {
   return <ActivityIndicator style={styles.loadingIndicator} color="#8f6b50" size="large" />
 }
 
-export default function ScriptureScreen(props) {
+export default function WebScreen(props) {
   return (
     <WebView
-      source={{ uri: props.route.params.scriptureURL }}
+      source={{ uri: props.route.params.url }}
       renderLoading={LoadingIndicatorView}
       startInLoadingState={true}
     />

@@ -3,7 +3,7 @@ import { IconButton, Menu } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
-import ScriptureScreen from './ScriptureScreen';
+import WebScreen from './WebScreen';
 
 const Stack = createStackNavigator();
 
@@ -11,9 +11,9 @@ export default function LiturgyNavigator() {
   const [menuVisible, setMenuVisible] = useState(false);
   const openWebsite = (navigation) => {
     setMenuVisible(false);
-    navigation.navigate("Scripture", {
-			scripturePassage: "The Daily Liturgy Podcast",
-			scriptureURL: "https://dailyliturgy.com/"
+    navigation.navigate("Web", {
+			title: "The Daily Liturgy Podcast",
+			url: "https://dailyliturgy.com/"
 		});
   };
 
@@ -49,11 +49,11 @@ export default function LiturgyNavigator() {
           })}
         />
         <Stack.Screen
-          name="Scripture"
-          component={ScriptureScreen}
+          name="Web"
+          component={WebScreen}
           options={(props) => {
             return {
-              title: props.route.params.scripturePassage
+              title: props.route.params.title
           }}}
         />
       </Stack.Navigator>
