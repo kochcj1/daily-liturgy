@@ -4,14 +4,13 @@ import AppLoading from 'expo-app-loading';
 import LiturgyNavigator from './components/LiturgyNavigator'
 
 // TODO:
-// - A way to open to main website
 // - icons8 licensing
 // - Pull in data from the internet, making sure to handle lack of internet connection
 // - Handle other screen sizes and types (e.g. tablets, without fancy status bar, etc.)
 
 // Log:
 // - Jan 28, 2022: 2.5 hours
-// - Jan 29, 2022: 1.5 hours
+// - Jan 29, 2022: 2.5 hours
 
 async function wait() {
   await new Promise(resolve => setTimeout(resolve, 1000));

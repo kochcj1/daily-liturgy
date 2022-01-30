@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Linking } from 'react-native';
 import { IconButton, Menu } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,9 +10,12 @@ const Stack = createStackNavigator();
 
 export default function LiturgyNavigator() {
   const [menuVisible, setMenuVisible] = useState(false);
-  const openWebsite = () => {
+  const openWebsite = (navigation) => {
     setMenuVisible(false);
-    Linking.openURL("https://dailyliturgy.com/");
+    navigation.navigate("Scripture", {
+			scripturePassage: "The Daily Liturgy Podcast",
+			scriptureURL: "https://dailyliturgy.com/"
+		});
   };
 
   return (
@@ -28,7 +30,7 @@ export default function LiturgyNavigator() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
+          options={({ navigation }) => ({
             title: "Friday, January 28, 2022",
             headerRight: () => (
               <Menu
@@ -42,10 +44,10 @@ export default function LiturgyNavigator() {
                   />
                 }
               >
-                <Menu.Item onPress={openWebsite} title="More About Daily Liturgy" />
+                <Menu.Item onPress={() => openWebsite(navigation)} title="About The Daily Liturgy Podcast" />
               </Menu>
             )
-          }}
+          })}
         />
         <Stack.Screen
           name="Scripture"
