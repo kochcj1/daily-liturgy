@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LogBox } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppLoading from 'expo-app-loading';
 import LiturgyNavigator from './components/LiturgyNavigator'
@@ -11,6 +12,10 @@ import LiturgyNavigator from './components/LiturgyNavigator'
 // Log:
 // - Jan 28, 2022: 2.5 hours
 // - Jan 29, 2022: 2.5 hours
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
+]);
 
 async function wait() {
   await new Promise(resolve => setTimeout(resolve, 1000));
