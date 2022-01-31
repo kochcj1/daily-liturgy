@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Avatar, Card, Paragraph, Button } from 'react-native-paper';
+import { StyleSheet, View, ScrollView, ViewBase } from 'react-native';
+import { Avatar, Card, Paragraph, Button, FAB } from 'react-native-paper';
 
 const BaseAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" />
 const PrayerAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-pray-64.png')} />
@@ -85,6 +85,26 @@ export default function HomeScreen({ navigation }) {
 					<View style={styles.verticalSpacer} />
 				</View>
 			</ScrollView>
+			<View style={styles.fabContainer}>
+				<FAB
+					style={styles.fab}
+					small
+					icon={require("../assets/icons8-replay-10-100.png")}
+					onPress={() => console.log('Pressed')}
+				/>
+				<FAB
+					style={styles.fab}
+					small
+					icon={require("../assets/icons8-play-90.png")}
+					onPress={() => console.log('Pressed')}
+				/>
+				<FAB
+					style={styles.fab}
+					small
+					icon={require("../assets/icons8-forward-10-100.png")}
+					onPress={() => console.log('Pressed')}
+				/>
+			</View>
 		</View>
 	);
 }
@@ -98,7 +118,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   scrollViewPadding: {
-    padding: 30
+    padding: 30,
+		paddingBottom: 65
   },
   subtitleStyle: {
     fontSize: 16
@@ -109,5 +130,21 @@ const styles = StyleSheet.create({
   },
   verticalSpacer: {
     height: 20
-  }
+  },
+	fabContainer: {
+		display: "flex",
+		flexDirection: "row",
+		alignContent: "center",
+		justifyContent: "space-between",
+		position: "absolute",
+    right: 0,
+    bottom: 0,
+		width: "100%",
+		height: 40,
+		marginBottom: 30,
+		paddingHorizontal: 18
+	},
+	fab: {
+		backgroundColor: "#8f6b50"
+	}
 });

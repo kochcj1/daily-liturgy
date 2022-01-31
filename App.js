@@ -5,6 +5,7 @@ import AppLoading from 'expo-app-loading';
 import LiturgyNavigator from './components/LiturgyNavigator'
 
 // TODO:
+// - Handle audio
 // - icons8 licensing
 // - Pull in data from the internet, making sure to handle lack of internet connection
 // - Handle other screen sizes and types (e.g. tablets, without fancy status bar, etc.)
@@ -13,6 +14,7 @@ import LiturgyNavigator from './components/LiturgyNavigator'
 // Log:
 // - Jan 28, 2022: 2.5 hours
 // - Jan 29, 2022: 3 hours
+// - Jan 30, 2022: 1 hour
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
