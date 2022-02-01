@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView, ViewBase } from 'react-native';
 import { Avatar, Card, Paragraph, Button, FAB } from 'react-native-paper';
@@ -7,7 +8,22 @@ const PrayerAvatar = props => <BaseAvatar {...props} icon={require('../assets/ic
 const ReadingAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-holy-bible-60.png')} />
 const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-gift-96.png')} />
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, audio }) {
+	const [audioStreaming, setAudioStreamingHelper] = useState(false);
+	const setAudioStreaming = (stream) => {
+		setAudioStreamingHelper(stream);
+		if (stream) {
+			audio.setStatusAsync({ shouldPlay: true });
+		}
+		else {
+			audio.pauseAsync();
+		}
+	};
+	const shiftAudio = async (milliseconds) => {
+		const status = await audio.getStatusAsync();
+		await audio.setPositionAsync(status.positionMillis + milliseconds); // see also playableDurationMillis
+	};
+
 	const openScripture = (passage, url) => {
 		navigation.navigate("Web", {
 			title: passage,
@@ -90,19 +106,22 @@ export default function HomeScreen({ navigation }) {
 					style={styles.fab}
 					small
 					icon={require("../assets/icons8-replay-10-100.png")}
-					onPress={() => console.log('Pressed')}
+					onPress={() => shiftAudio(-10000)}
 				/>
 				<FAB
 					style={styles.fab}
 					small
-					icon={require("../assets/icons8-play-90.png")}
-					onPress={() => console.log('Pressed')}
+					icon={audioStreaming ?
+						require("../assets/icons8-pause-90.png") :
+						require("../assets/icons8-play-90.png")
+					}
+					onPress={() => setAudioStreaming(!audioStreaming)}
 				/>
 				<FAB
 					style={styles.fab}
 					small
 					icon={require("../assets/icons8-forward-10-100.png")}
-					onPress={() => console.log('Pressed')}
+					onPress={() => shiftAudio(10000)}
 				/>
 			</View>
 		</View>
