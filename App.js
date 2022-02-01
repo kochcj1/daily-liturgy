@@ -15,7 +15,7 @@ import { Audio } from 'expo-av';
 // - Jan 28, 2022: 2.5 hours
 // - Jan 29, 2022: 3 hours
 // - Jan 30, 2022: 1 hour
-// - Jan 31, 2022: 1.5 hours
+// - Jan 31, 2022: 3.5 hours
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",

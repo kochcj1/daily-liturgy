@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView, ViewBase } from 'react-native';
 import { Avatar, Card, Paragraph, Button, FAB } from 'react-native-paper';
@@ -7,6 +7,17 @@ const BaseAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" />
 const PrayerAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-pray-64.png')} />
 const ReadingAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-holy-bible-60.png')} />
 const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-gift-96.png')} />
+
+// From https://stackoverflow.com/a/21294619/3987765:
+function millisToMinutesAndSeconds(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return (
+		seconds == 60 ?
+		(minutes+1) + ":00" :
+		minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+	);
+}
 
 export default function HomeScreen({ navigation, audio }) {
 	const [audioStreaming, setAudioStreamingHelper] = useState(false);
@@ -21,8 +32,15 @@ export default function HomeScreen({ navigation, audio }) {
 	};
 	const shiftAudio = async (milliseconds) => {
 		const status = await audio.getStatusAsync();
-		await audio.setPositionAsync(status.positionMillis + milliseconds); // see also playableDurationMillis
+		await audio.setPositionAsync(status.positionMillis + milliseconds);
 	};
+
+	const [audioProgress, setAudioProgress] = useState("0:00 / 0:00");
+	useEffect(() => {
+		audio.setOnPlaybackStatusUpdate((status) => {
+			setAudioProgress(`${millisToMinutesAndSeconds(status.positionMillis)} / ${millisToMinutesAndSeconds(status.playableDurationMillis)}`);
+		});
+	}, []);
 
 	const openScripture = (passage, url) => {
 		navigation.navigate("Web", {
@@ -103,14 +121,14 @@ export default function HomeScreen({ navigation, audio }) {
 			</ScrollView>
 			<View style={styles.fabContainer}>
 				<FAB
-					style={styles.fab}
 					small
+					style={styles.smallFab}
 					icon={require("../assets/icons8-replay-10-100.png")}
 					onPress={() => shiftAudio(-10000)}
 				/>
 				<FAB
 					style={styles.fab}
-					small
+					label={audioProgress}
 					icon={audioStreaming ?
 						require("../assets/icons8-pause-90.png") :
 						require("../assets/icons8-play-90.png")
@@ -118,8 +136,8 @@ export default function HomeScreen({ navigation, audio }) {
 					onPress={() => setAudioStreaming(!audioStreaming)}
 				/>
 				<FAB
-					style={styles.fab}
 					small
+					style={styles.smallFab}
 					icon={require("../assets/icons8-forward-10-100.png")}
 					onPress={() => shiftAudio(10000)}
 				/>
@@ -138,7 +156,7 @@ const styles = StyleSheet.create({
   },
   scrollViewPadding: {
     padding: 30,
-		paddingBottom: 65
+		paddingBottom: 75
   },
   subtitleStyle: {
     fontSize: 16
@@ -154,14 +172,17 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		alignContent: "center",
-		justifyContent: "space-between",
+		justifyContent: "space-around",
 		position: "absolute",
     right: 0,
     bottom: 0,
 		width: "100%",
-		height: 40,
-		marginBottom: 30,
-		paddingHorizontal: 18
+		height: 50,
+		marginBottom: 30
+	},
+	smallFab: {
+		backgroundColor: "#8f6b50",
+		marginVertical: 5
 	},
 	fab: {
 		backgroundColor: "#8f6b50"
