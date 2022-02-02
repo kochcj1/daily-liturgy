@@ -8,10 +8,10 @@ import * as cheerio from 'cheerio';
 
 // TODO:
 // - icons8 licensing
-// - Audio on other pages too, especially on Bible reading pages
+// - use useFocusEffect or something to re-show the Home screen's audio controls which may have been hidden by the About screen
 // - Handle play button state when we reach the end of audio or when exiting the app
-// - Handle other screen sizes and types (e.g. tablets, without fancy status bar, screen rotation, etc.)
 // - Handle lack of internet connectivity and/or lack of being able to parse out the information we need
+// - Handle other screen sizes and types (e.g. tablets, without fancy status bar, screen rotation, etc.)
 // - Publish the app (with app icon)
 
 // Log:
@@ -19,7 +19,7 @@ import * as cheerio from 'cheerio';
 // - Jan 29, 2022: 3 hours
 // - Jan 30, 2022: 1 hour
 // - Jan 31, 2022: 3.5 hours
-// - Feb 01, 2022: 2 hours
+// - Feb 01, 2022: 3 hours
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",

@@ -1,47 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Avatar, Card, Paragraph, Button, FAB } from 'react-native-paper';
+import { Avatar, Card, Paragraph, Button } from 'react-native-paper';
 
 const BaseAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" />
 const PrayerAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-pray-64.png')} />
 const ReadingAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-holy-bible-60.png')} />
 const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-gift-96.png')} />
 
-// From https://stackoverflow.com/a/21294619/3987765:
-function millisToMinutesAndSeconds(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = ((millis % 60000) / 1000).toFixed(0);
-  return (
-		seconds == 60 ?
-		(minutes+1) + ":00" :
-		minutes + ":" + (seconds < 10 ? "0" : "") + seconds
-	);
-}
-
 export default function HomeScreen({ navigation, liturgy }) {
-	const [audioStreaming, setAudioStreamingHelper] = useState(false);
-	const setAudioStreaming = (stream) => {
-		setAudioStreamingHelper(stream);
-		if (stream) {
-			liturgy.audio.setStatusAsync({ shouldPlay: true });
-		}
-		else {
-			liturgy.audio.pauseAsync();
-		}
-	};
-	const shiftAudio = async (milliseconds) => {
-		const status = await liturgy.audio.getStatusAsync();
-		await liturgy.audio.setPositionAsync(status.positionMillis + milliseconds);
-	};
-
-	const [audioProgress, setAudioProgress] = useState("0:00 / 0:00");
-	useEffect(() => {
-		liturgy.audio.setOnPlaybackStatusUpdate((status) => {
-			setAudioProgress(`${millisToMinutesAndSeconds(status.positionMillis)} / ${millisToMinutesAndSeconds(status.playableDurationMillis)}`);
-		});
-	}, []);
-
 	const openScripture = (passage) => {
 		navigation.navigate("Web", {
 			title: passage,
@@ -119,29 +86,6 @@ export default function HomeScreen({ navigation, liturgy }) {
 					<View style={styles.verticalSpacer} />
 				</View>
 			</ScrollView>
-			<View style={styles.fabContainer}>
-				<FAB
-					small
-					style={styles.smallFab}
-					icon={require("../assets/icons8-replay-10-100.png")}
-					onPress={() => shiftAudio(-10000)}
-				/>
-				<FAB
-					style={styles.fab}
-					label={audioProgress}
-					icon={audioStreaming ?
-						require("../assets/icons8-pause-90.png") :
-						require("../assets/icons8-play-90.png")
-					}
-					onPress={() => setAudioStreaming(!audioStreaming)}
-				/>
-				<FAB
-					small
-					style={styles.smallFab}
-					icon={require("../assets/icons8-forward-10-100.png")}
-					onPress={() => shiftAudio(10000)}
-				/>
-			</View>
 		</View>
 	);
 }
