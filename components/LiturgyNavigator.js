@@ -7,7 +7,7 @@ import WebScreen from './WebScreen';
 
 const Stack = createStackNavigator();
 
-export default function LiturgyNavigator({ audio }) {
+export default function LiturgyNavigator({ liturgy }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const openWebsite = (navigation) => {
     setMenuVisible(false);
@@ -29,7 +29,7 @@ export default function LiturgyNavigator({ audio }) {
         <Stack.Screen
           name="Home"
           options={({ navigation }) => ({
-            title: "Friday, January 28, 2022",
+            title: liturgy.title,
             headerRight: () => (
               <Menu
                 visible={menuVisible}
@@ -47,7 +47,7 @@ export default function LiturgyNavigator({ audio }) {
             )
           })}
         >
-          {props => <HomeScreen {...props} audio={audio} />}
+          {props => <HomeScreen {...props} liturgy={liturgy} />}
         </Stack.Screen>
         <Stack.Screen
           name="Web"
