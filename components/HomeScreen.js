@@ -1,5 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Avatar, Card, Paragraph, Button } from 'react-native-paper';
 
@@ -8,13 +9,19 @@ const PrayerAvatar = props => <BaseAvatar {...props} icon={require('../assets/ic
 const ReadingAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-holy-bible-60.png')} />
 const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-gift-96.png')} />
 
-export default function HomeScreen({ navigation, liturgy }) {
+export default function HomeScreen({ navigation, liturgy, onFocus=null }) {
 	const openScripture = (passage) => {
 		navigation.navigate("Web", {
 			title: passage,
 			url: `https://www.esv.org/${passage.replace(" ", "+")}`
 		});
 	};
+
+	useFocusEffect(() => {
+		if (onFocus) {
+			onFocus();
+		}
+	});
 
 	return (
 		<View style={styles.container}>
@@ -111,24 +118,5 @@ const styles = StyleSheet.create({
   },
   verticalSpacer: {
     height: 20
-  },
-	fabContainer: {
-		display: "flex",
-		flexDirection: "row",
-		alignContent: "center",
-		justifyContent: "space-around",
-		position: "absolute",
-    right: 0,
-    bottom: 0,
-		width: "100%",
-		height: 50,
-		marginBottom: 30
-	},
-	smallFab: {
-		backgroundColor: "#8f6b50",
-		marginVertical: 5
-	},
-	fab: {
-		backgroundColor: "#8f6b50"
-	}
+  }
 });

@@ -114,7 +114,11 @@ export default function LiturgyNavigator({ liturgy }) {
               )
             })}
           >
-            {props => <HomeScreen {...props} liturgy={liturgy} />}
+            {props => <HomeScreen
+              {...props}
+              liturgy={liturgy}
+              onFocus={() => setAudioControlsVisible(true)}
+            />}
           </Stack.Screen>
           <Stack.Screen
             name="Web"
@@ -125,7 +129,11 @@ export default function LiturgyNavigator({ liturgy }) {
             }}}
           />
         </Stack.Navigator>
-        <View style={styles.fabContainer} visible={audioControlsVisible}>
+        <View
+          style={styles.fabContainer}
+          visible={audioControlsVisible}
+          pointerEvents="box-none"
+        >
           <FAB
             small
             style={styles.smallFab}

@@ -7,12 +7,16 @@ import { Audio } from 'expo-av';
 import * as cheerio from 'cheerio';
 
 // TODO:
+// - Handle lack of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
+// - Use "Back" as the back-screen text on tablet
+// - Bigger default font on tablet
+// - Better positioning of forward and back buttons on tablet
 // - icons8 licensing
-// - Settings, including font and "auto-pause after"
-// - use useFocusEffect or something to re-show the Home screen's audio controls which may have been hidden by the About screen
-// - Handle lack of internet connectivity and/or lack of being able to parse out the information we need
-// - Handle other screen sizes and types (e.g. tablets, screens without fancy status bars, screen rotation, etc.)
 // - Publish the app (with app icon)
+
+// Nice to have:
+// - Settings (e.g. font and "automatically pause after...")
+// - Scroll to content as audio is being played (using Aeneas, for example)
 
 // Log:
 // - Jan 28, 2022: 2.5 hours
@@ -20,7 +24,7 @@ import * as cheerio from 'cheerio';
 // - Jan 30, 2022: 1 hour
 // - Jan 31, 2022: 3.5 hours
 // - Feb 01, 2022: 3 hours
-// - Feb 03, 2022: 1 hour
+// - Feb 03, 2022: 2.5 hours
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
