@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, AppState } from 'react-native';
 import { IconButton, Menu, FAB } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
 import WebScreen from './WebScreen';
 
-// From https://stackoverflow.com/a/21294619/3987765:
+// Based on https://stackoverflow.com/a/21294628/3987765:
 function millisToMinutesAndSeconds(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = ((millis % 60000) / 1000).toFixed(0);
-  return (
-		seconds == 60 ?
-		(minutes+1) + ":00" :
-		minutes + ":" + (seconds < 10 ? "0" : "") + seconds
-	);
+  let minutes = millis / 1000 / 60;
+  const remainder = minutes % 1;
+  let seconds = Math.floor(remainder * 60);
+  if (seconds < 10) {
+      seconds = `0${seconds}`;
+  }
+  minutes = Math.floor(minutes);
+  return `${minutes}:${seconds}`;
 }
 
 const Stack = createStackNavigator();
@@ -33,15 +34,44 @@ export default function LiturgyNavigator({ liturgy }) {
 	};
 	const shiftAudio = async (milliseconds) => {
 		const status = await liturgy.audio.getStatusAsync();
-		await liturgy.audio.setPositionAsync(status.positionMillis + milliseconds);
+    let position = status.positionMillis + milliseconds;
+    if (position < 0) {
+      position = 0;
+    }
+    else if (position > status.playableDurationMillis) {
+      position = status.playableDurationMillis;
+    }
+		await liturgy.audio.setPositionAsync(position);
 	};
 
 	const [audioProgress, setAudioProgress] = useState("0:00 / 0:00");
 	useEffect(() => {
 		liturgy.audio.setOnPlaybackStatusUpdate((status) => {
 			setAudioProgress(`${millisToMinutesAndSeconds(status.positionMillis)} / ${millisToMinutesAndSeconds(status.playableDurationMillis)}`);
-		});
+      
+      // The playback position won't necessarily reach the total duration, but knowing
+      // the two strings are equal should get us close enough to knowing that the audio
+      // is probably done:
+      if (millisToMinutesAndSeconds(status.positionMillis) === millisToMinutesAndSeconds(status.playableDurationMillis)) {
+        setAudioStreaming(false);
+      }
+    });
 	}, []);
+
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  }, []);
+
+  // Pause the audio when the app closes:
+  const handleAppStateChange = (nextAppState) => {
+    if (nextAppState === "background") {
+      setAudioStreaming(false);
+    }    
+  };
 
   const [menuVisible, setMenuVisible] = useState(false);
   const openWebsite = (navigation) => {
