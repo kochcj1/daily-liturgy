@@ -89,6 +89,7 @@ export default function LiturgyNavigator({ liturgy }) {
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
+            headerBackTitle: "Back",
             headerStyle: { backgroundColor: "#8f6b50" },
             headerTintColor: "white"
           }}
@@ -168,13 +169,14 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		alignContent: "center",
-		justifyContent: "space-around",
+		justifyContent: "space-between",
 		position: "absolute",
     right: 0,
     bottom: 0,
 		width: "100%",
 		height: 50,
-		marginBottom: 30
+		marginBottom: 30,
+    paddingHorizontal: 20
 	},
 	smallFab: {
 		backgroundColor: "#8f6b50",
