@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
 import WebScreen from './WebScreen';
+import SupportScreen from './SupportScreen';
 
 // Based on https://stackoverflow.com/a/21294628/3987765:
 function millisToMinutesAndSeconds(millis) {
@@ -83,6 +84,12 @@ export default function LiturgyNavigator({ liturgy }) {
 			url: "https://dailyliturgy.com/"
 		});
   };
+  const openSupportScreen = (navigation) => {
+    setMenuVisible(false);
+    setAudioStreaming(false);
+    setAudioControlsVisible(false);
+    navigation.navigate("Support");
+  };
 
   return (
       <NavigationContainer>
@@ -111,6 +118,7 @@ export default function LiturgyNavigator({ liturgy }) {
                   }
                 >
                   <Menu.Item onPress={() => openWebsite(navigation)} title="About The Daily Liturgy Podcast" />
+                  <Menu.Item onPress={() => openSupportScreen(navigation)} title="Support The Daily Liturgy Podcast" />
                 </Menu>
               )
             })}
@@ -127,6 +135,14 @@ export default function LiturgyNavigator({ liturgy }) {
             options={(props) => {
               return {
                 title: props.route.params.title
+            }}}
+          />
+          <Stack.Screen
+            name="Support"
+            component={SupportScreen}
+            options={(props) => {
+              return {
+                title: "Support Us"
             }}}
           />
         </Stack.Navigator>

@@ -1,0 +1,1 @@
+export default BASE_URL = "https://daily-liturgy-donations.herokuapp.com";

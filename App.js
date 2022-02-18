@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { LogBox } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppLoading from 'expo-app-loading';
 import LiturgyNavigator from './components/LiturgyNavigator';
+import { initStripe } from '@stripe/stripe-react-native';
 import { Audio } from 'expo-av';
 import * as cheerio from 'cheerio';
+import fetchPublishableKey from './donations/fetchPublishableKey';
 
 // TODO:
+// - A way to donate
+// - Still allow the app to work even if Stripe and Apple Pay aren't available at the moment
 // - Move FABs down?
 // - Bigger default font on tablet (see https://stackoverflow.com/a/44563995/3987765)
 // - Handle lack of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
@@ -15,27 +18,26 @@ import * as cheerio from 'cheerio';
 // - Test on physical devices
 // - Publish the app
 
-// Nice to have:
-// - A way to donate
+// Wishlist:
 // - Settings (e.g. font)
 // - Scroll to content as audio is being played (using Aeneas Vagrant, for example)
 //   - Option to automatically pause after a certain place in the app (and maybe add an actual card there for personal prayer... card can link to the setting in case they want to change that)
 // - A way to share a link to the app in the App Store
-// - A reminder to rate the app
-
-// Log:
-// - Jan 28, 2022: 2.5 hours
-// - Jan 29, 2022: 3 hours
-// - Jan 30, 2022: 1 hour
-// - Jan 31, 2022: 3.5 hours
-// - Feb 01, 2022: 3 hours
-// - Feb 03, 2022: 3 hours
-
-LogBox.ignoreLogs([
-  "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
-]);
+// - A reminder to rate the app (but not the first time, after regular usage)
 
 async function loadAsync() {
+  // TODO: get merchant identifier (and URL scheme?)
+  // TODO: only do this if user accesses payment screen (rather than on app load)
+  const publishableKey = await fetchPublishableKey();
+  if (publishableKey) {
+    await initStripe({
+      publishableKey,
+      merchantIdentifier: "merchant.com.stripe.react.native",
+      urlScheme: "stripe-example",
+      setUrlSchemeOnAndroid: true,
+    });
+  }
+
   const response = await fetch("https://dailyliturgy.com/read");
   const htmlData = await response.text();
   const $ = cheerio.load(htmlData);
@@ -56,6 +58,7 @@ async function loadAsync() {
   const { sound: audio } = await Audio.Sound.createAsync(
     { uri: liturgy.audioUrl }
   );
+
   await new Promise(resolve => setTimeout(resolve, 1000));
   return { ...liturgy, audio }
 };
