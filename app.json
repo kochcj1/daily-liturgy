@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Daily_Liturgy_Logo.png",
+        "foregroundImage": "./assets/Daily_Liturgy_Logo_Small.png",
         "backgroundColor": "#FFFFFF"
       }
     },
