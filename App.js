@@ -9,6 +9,7 @@ import fetchPublishableKey from './donations/fetchPublishableKey';
 
 // TODO:
 // - A way to donate
+// - components -> screens
 // - Still allow the app to work even if Stripe and Apple Pay aren't available at the moment
 // - Move FABs down?
 // - Bigger default font on tablet (see https://stackoverflow.com/a/44563995/3987765)

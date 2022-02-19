@@ -142,7 +142,7 @@ export default function LiturgyNavigator({ liturgy }) {
             component={SupportScreen}
             options={(props) => {
               return {
-                title: "Support Us"
+                title: "Support the Podcast"
             }}}
           />
         </Stack.Navigator>
