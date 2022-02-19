@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
 import LiturgyNavigator from './screens/LiturgyNavigator';
 import { initStripe } from '@stripe/stripe-react-native';
 import { Audio } from 'expo-av';
@@ -16,7 +17,6 @@ import fetchPublishableKey from './donations/fetchPublishableKey';
 // - Publish the app
 
 // Wishlist:
-// - Monospace font in play button
 // - Settings (e.g. font)
 // - Scroll to content as audio is being played (using Aeneas Vagrant, for example)
 //   - Option to automatically pause after a certain place in the app (and maybe add an actual card there for personal prayer... card can link to the setting in case they want to change that)
@@ -35,6 +35,10 @@ async function loadAsync() {
       setUrlSchemeOnAndroid: true,
     });
   }
+
+  await Font.loadAsync({
+    "Roboto-Mono": require('./assets/fonts/Roboto_Mono/static/RobotoMono-Medium.ttf'),
+  });
 
   const response = await fetch("https://dailyliturgy.com/read");
   const htmlData = await response.text();

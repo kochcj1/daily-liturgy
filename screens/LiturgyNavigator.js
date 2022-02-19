@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, AppState } from 'react-native';
-import { IconButton, Menu, FAB } from 'react-native-paper';
+import { IconButton, Menu, FAB, DefaultTheme, configureFonts } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
 import WebScreen from './WebScreen';
 import SupportScreen from './SupportScreen';
+
+const fabFontConfig = {
+  ios: {
+    medium: {
+      fontFamily: 'Roboto-Mono',
+      fontWeight: 'normal',
+    }
+  },
+};
+
+const fabTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    accent: "#8f6b50",
+  },
+  fonts: configureFonts(fabFontConfig)
+};
 
 // Based on https://stackoverflow.com/a/21294628/3987765:
 function millisToMinutesAndSeconds(millis) {
@@ -16,7 +34,10 @@ function millisToMinutesAndSeconds(millis) {
       seconds = `0${seconds}`;
   }
   minutes = Math.floor(minutes);
-  return `${minutes}:${seconds}`;
+
+  // Replacing 0s with Os because I don't like the way Roboto
+  // Mono renders its 0:
+  return `${minutes}:${seconds}`.replaceAll("0", "O");
 }
 
 const Stack = createStackNavigator();
@@ -48,10 +69,10 @@ export default function LiturgyNavigator({ liturgy }) {
   // TODO: audio not working in Expo Go on my physical iPhone... just an Expo Go thing?
   // Specifically not working on Friday, February 18, 2022... what about other dates?
   // http://dailyliturgypodcast.s3.amazonaws.com/EpiphanyDay43_2022(Friday).mp3
-	const [audioProgress, setAudioProgress] = useState("0:00 / 0:00");
+	const [audioProgress, setAudioProgress] = useState("O:OO/O:OO");
 	useEffect(() => {
 		liturgy.audio.setOnPlaybackStatusUpdate((status) => {
-			setAudioProgress(`${millisToMinutesAndSeconds(status.positionMillis)} / ${millisToMinutesAndSeconds(status.playableDurationMillis)}`);
+			setAudioProgress(`${millisToMinutesAndSeconds(status.positionMillis)}/${millisToMinutesAndSeconds(status.playableDurationMillis)}`);
       
       // The playback position won't necessarily reach the total duration, but knowing
       // the two strings are equal should get us close enough to knowing that the audio
@@ -163,6 +184,7 @@ export default function LiturgyNavigator({ liturgy }) {
           />
           <FAB
             style={styles.fab}
+            theme={fabTheme}
             label={audioProgress}
             icon={audioStreaming ?
               require("../assets/icons8-pause-90.png") :
@@ -200,8 +222,5 @@ const styles = StyleSheet.create({
 	smallFab: {
 		backgroundColor: "#8f6b50",
 		marginVertical: 5
-	},
-	fab: {
-		backgroundColor: "#8f6b50"
 	}
 });
