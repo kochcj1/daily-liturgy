@@ -3,9 +3,8 @@ import { Alert } from 'react-native';
 import { DONATIONS_API_KEY } from '../config';
 import BASE_URL from './baseUrl';
 
-// TODO: don't hardcode API key!!!
 // TODO: do better than an obscure alert
-export default fetchPaymentIntentClientSecret = async () => {
+export default fetchPaymentIntentClientSecret = async (amountDollars) => {
   try {
     const response = await fetch(`${BASE_URL}/payment-intents`, {
       method: 'POST',
@@ -14,7 +13,7 @@ export default fetchPaymentIntentClientSecret = async () => {
         'Authorization': `Basic ${DONATIONS_API_KEY}`
       },
       body: JSON.stringify({
-        amount: 1, // TODO: don't hardcode this dollar value
+        amount: amountDollars,
         currency: 'usd'
       }),
     });

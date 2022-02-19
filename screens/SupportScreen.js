@@ -39,7 +39,7 @@ export default function SupportScreen({ navigation }) {
       }
     }
     else {
-      const clientSecret = await fetchPaymentIntentClientSecret();
+      const clientSecret = await fetchPaymentIntentClientSecret(donationAmount);
       const { error: confirmApplePayError } = await confirmApplePayPayment(
         clientSecret
       );
