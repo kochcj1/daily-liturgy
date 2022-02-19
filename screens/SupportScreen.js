@@ -11,9 +11,14 @@ export default function SupportScreen() {
     confirmApplePayPayment,
     isApplePaySupported
   } = useApplePay();
-  if (!isApplePaySupported) {
+
+  // Commenting this out for now because alert is showing up on devices
+  // that do support Apple Pay... probably just better to show some text
+  // in the GUI indicating that Apple Pay isn't supported
+  /*if (!isApplePaySupported) {
+    // TODO: fix the fact that user has to dismiss this twice
     Alert.alert("Error", "Apple Pay isn't supported on this device");
-  }
+  }*/
 
   const customDonationOption = "🤔";
   const donationOptions = ["$1.99", "$4.99", "$14.99", "$24.99", "$49.99", customDonationOption];
