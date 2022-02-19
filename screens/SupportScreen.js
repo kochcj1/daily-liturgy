@@ -96,6 +96,7 @@ export default function SupportScreen({ navigation }) {
               ref={donationAmountInputRef}
               style={styles.currencyInput}
               textAlign="center"
+              placeholder="$0.00"
               keyboardType="decimal-pad"
               value={donationAmount}
               onChangeValue={(value) => {
