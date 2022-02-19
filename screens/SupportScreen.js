@@ -5,7 +5,7 @@ import { ApplePayButton, useApplePay } from '@stripe/stripe-react-native';
 import fetchPaymentIntentClientSecret from '../donations/fetchPaymentIntentClientSecret';
 import CurrencyInput from 'react-native-currency-input';
 
-export default function SupportScreen() {
+export default function SupportScreen({ navigation }) {
   const {
     presentApplePay,
     confirmApplePayPayment,
@@ -45,6 +45,9 @@ export default function SupportScreen() {
       );
       if (confirmApplePayError) {
         Alert.alert(confirmApplePayError.code, confirmApplePayError.message);
+      }
+      else {
+        navigation.pop();
       }
     }
   };

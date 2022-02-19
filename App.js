@@ -17,6 +17,7 @@ import fetchPublishableKey from './donations/fetchPublishableKey';
 // - Publish the app
 
 // Wishlist:
+// - Monospace font in play button
 // - Settings (e.g. font)
 // - Scroll to content as audio is being played (using Aeneas Vagrant, for example)
 //   - Option to automatically pause after a certain place in the app (and maybe add an actual card there for personal prayer... card can link to the setting in case they want to change that)
