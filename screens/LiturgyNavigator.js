@@ -45,6 +45,9 @@ export default function LiturgyNavigator({ liturgy }) {
 		await liturgy.audio.setPositionAsync(position);
 	};
 
+  // TODO: audio not working in Expo Go on my physical iPhone... just an Expo Go thing?
+  // Specifically not working on Friday, February 18, 2022... what about other dates?
+  // http://dailyliturgypodcast.s3.amazonaws.com/EpiphanyDay43_2022(Friday).mp3
 	const [audioProgress, setAudioProgress] = useState("0:00 / 0:00");
 	useEffect(() => {
 		liturgy.audio.setOnPlaybackStatusUpdate((status) => {
