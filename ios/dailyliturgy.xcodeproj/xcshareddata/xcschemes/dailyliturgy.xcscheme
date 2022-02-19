@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "dailyliturgy.app"
-               BlueprintName = "dailyliturgy"
-               ReferencedContainer = "container:dailyliturgy.xcodeproj">
+               BuildableName = "DailyLiturgy.app"
+               BlueprintName = "DailyLiturgy"
+               ReferencedContainer = "container:DailyLiturgy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "dailyliturgyTests.xctest"
-               BlueprintName = "dailyliturgyTests"
-               ReferencedContainer = "container:dailyliturgy.xcodeproj">
+               BuildableName = "DailyLiturgyTests.xctest"
+               BlueprintName = "DailyLiturgyTests"
+               ReferencedContainer = "container:DailyLiturgy.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "dailyliturgy.app"
-            BlueprintName = "dailyliturgy"
-            ReferencedContainer = "container:dailyliturgy.xcodeproj">
+            BuildableName = "DailyLiturgy.app"
+            BlueprintName = "DailyLiturgy"
+            ReferencedContainer = "container:DailyLiturgy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "dailyliturgy.app"
-            BlueprintName = "dailyliturgy"
-            ReferencedContainer = "container:dailyliturgy.xcodeproj">
+            BuildableName = "DailyLiturgy.app"
+            BlueprintName = "DailyLiturgy"
+            ReferencedContainer = "container:DailyLiturgy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

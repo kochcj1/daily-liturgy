@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dailyliturgy",
+    "name": "Daily Liturgy",
     "slug": "dailyliturgy",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kochcj1.dailyliturgy"
+      "bundleIdentifier": "com.dailyliturgy"
     },
     "android": {
       "adaptiveIcon": {
