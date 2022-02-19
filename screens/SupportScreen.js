@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Fragment } from 'react';
 import { Button } from 'react-native-paper';
 import { Alert, StyleSheet, View, FlatList } from 'react-native';
 import { ApplePayButton, useApplePay } from '@stripe/stripe-react-native';
@@ -11,6 +11,9 @@ export default function SupportScreen() {
     confirmApplePayPayment,
     isApplePaySupported
   } = useApplePay();
+  if (!isApplePaySupported) {
+    Alert.alert("Error", "Apple Pay isn't supported on this device");
+  }
 
   const customDonationOption = "🤔";
   const donationOptions = ["$1.99", "$4.99", "$14.99", "$24.99", "$49.99", customDonationOption];
@@ -65,58 +68,60 @@ export default function SupportScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        style={styles.buttonGrid}
-        scrollEnabled={false}
-        numColumns={2}
-        data={donationOptions}
-        renderItem={renderDonationOption}
-        keyExtractor={donationOption => donationOption}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "center"
-        }}
-      />
-      <View style={styles.divider} />
-      <View style={styles.paymentArea}>
-        <CurrencyInput
-          ref={donationAmountInputRef}
-          style={styles.currencyInput}
-          textAlign="center"
-          keyboardType="decimal-pad"
-          value={donationAmount}
-          onChangeValue={(value) => {
-            if (value < 0) {
-              value = 0;
-            }
-            else if (value > 1000) {
-              value = 1000;
-            }
-            setDonationAmount(value);
-          }}
-          onChangeText={(text) => {
-            setDonationAmountText(text.substring(1));
-          }}
-          prefix="$"
-          delimiter=","
-          separator="."
-          precision={2}
-        />
-        {isApplePaySupported &&
-          <ApplePayButton
-            onPress={() => {
-              const minDonationAmount = 1;
-              if (donationAmount < minDonationAmount) {
-                Alert.alert("Invalid amount", "Please enter a value of at least $1.00");
-              }
-              else {
-                pay();
-              }
+      {isApplePaySupported && (
+        <Fragment>
+          <FlatList
+            style={styles.buttonGrid}
+            scrollEnabled={false}
+            numColumns={2}
+            data={donationOptions}
+            renderItem={renderDonationOption}
+            keyExtractor={donationOption => donationOption}
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "center"
             }}
-            style={styles.payButton}
           />
-        }
-      </View>
+          <View style={styles.divider} />
+          <View style={styles.paymentArea}>
+            <CurrencyInput
+              ref={donationAmountInputRef}
+              style={styles.currencyInput}
+              textAlign="center"
+              keyboardType="decimal-pad"
+              value={donationAmount}
+              onChangeValue={(value) => {
+                if (value < 0) {
+                  value = 0;
+                }
+                else if (value > 1000) {
+                  value = 1000;
+                }
+                setDonationAmount(value);
+              }}
+              onChangeText={(text) => {
+                setDonationAmountText(text.substring(1));
+              }}
+              prefix="$"
+              delimiter=","
+              separator="."
+              precision={2}
+            />
+            <ApplePayButton
+              onPress={() => {
+                const minDonationAmount = 1;
+                if (donationAmount < minDonationAmount) {
+                  Alert.alert("Invalid amount", "Please enter a value of at least $1.00");
+                }
+                else {
+                  pay();
+                }
+              }}
+              style={styles.payButton}
+            />
+          </View>
+        </Fragment>
+      )}
     </View>
   );
 }
