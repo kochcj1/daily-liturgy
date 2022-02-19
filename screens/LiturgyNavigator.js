@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     bottom: 0,
 		width: "100%",
 		height: 50,
-		marginBottom: 30,
+		marginBottom: 25,
     paddingHorizontal: 20
 	},
 	smallFab: {

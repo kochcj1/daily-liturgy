@@ -63,7 +63,6 @@ export default function SupportScreen() {
     </Button>
   );
 
-  // TODO: add checkbox for covering fees
   return (
     <View style={styles.container}>
       <FlatList
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   currencyInput: {
-    height: 50,
+    height: 45,
     fontSize: 25,
     marginRight: 20
   },

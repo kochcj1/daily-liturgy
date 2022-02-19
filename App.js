@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppLoading from 'expo-app-loading';
-import LiturgyNavigator from './components/LiturgyNavigator';
+import LiturgyNavigator from './screens/LiturgyNavigator';
 import { initStripe } from '@stripe/stripe-react-native';
 import { Audio } from 'expo-av';
 import * as cheerio from 'cheerio';
 import fetchPublishableKey from './donations/fetchPublishableKey';
 
 // TODO:
-// - A way to donate
-// - components -> screens
 // - Still allow the app to work even if Stripe and Apple Pay aren't available at the moment
-// - Move FABs down?
 // - Bigger default font on tablet (see https://stackoverflow.com/a/44563995/3987765)
 // - Handle lack of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
 // - icons8 licensing
