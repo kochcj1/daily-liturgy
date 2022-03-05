@@ -9,9 +9,9 @@ import * as cheerio from 'cheerio';
 import fetchPublishableKey from './donations/fetchPublishableKey';
 
 // TODO:
+// - Donation buttons' primary color should be white or something?
 // - Still allow the app to work even if Stripe and Apple Pay aren't available at the moment
 // - Bigger default font on tablet (see https://stackoverflow.com/a/44563995/3987765)
-// - icons8 licensing (in app's About screen)
 // - Splash screen on landscape tablet seems distorted
 // - Test on physical devices (is the following covered by AppLoading already?...especially handling of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
 // - Publish the app

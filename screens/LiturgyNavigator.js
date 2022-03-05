@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
 import WebScreen from './WebScreen';
 import SupportScreen from './SupportScreen';
+import AboutScreen from './AboutScreen';
 
 const fabFontConfig = {
   ios: {
@@ -43,12 +44,14 @@ function millisToMinutesAndSeconds(millis) {
 const Stack = createStackNavigator();
 
 export default function LiturgyNavigator({ liturgy }) {
+  const [audioPlayed, setAudioPlayed] = useState(false);
   const [audioControlsVisible, setAudioControlsVisible] = useState(true);
   const [audioStreaming, setAudioStreamingHelper] = useState(false);
 	const setAudioStreaming = (stream) => {
 		setAudioStreamingHelper(stream);
 		if (stream) {
 			liturgy.audio.setStatusAsync({ shouldPlay: true });
+      setAudioPlayed(true);
 		}
 		else {
 			liturgy.audio.pauseAsync();
@@ -68,8 +71,8 @@ export default function LiturgyNavigator({ liturgy }) {
 
   // TODO: audio not working in Expo Go on my physical iPhone... just an Expo Go thing?
   // Specifically not working on Friday, February 18, 2022... what about other dates?
-  // http://dailyliturgypodcast.s3.amazonaws.com/EpiphanyDay43_2022(Friday).mp3
-  // Audio the following day sometimes showed up as 12 minutes long, as expected,
+  // I was seeing NaNs... http://dailyliturgypodcast.s3.amazonaws.com/EpiphanyDay43_2022(Friday).mp3
+  // Also, the audio the following day sometimes showed up as 12 minutes long, as expected,
   // sometimes longer (on virtual device at least)
 	const [audioProgress, setAudioProgress] = useState("O:OO/O:OO");
 	useEffect(() => {
@@ -101,20 +104,25 @@ export default function LiturgyNavigator({ liturgy }) {
   };
 
   const [menuVisible, setMenuVisible] = useState(false);
-  const openWebsite = (navigation) => {
+  const openScreenFromMenu = () => {
     setMenuVisible(false);
     setAudioStreaming(false);
     setAudioControlsVisible(false);
+  };
+  const openWebsite = (navigation) => {
+    openScreenFromMenu();
     navigation.navigate("Web", {
 			title: "The Daily Liturgy Podcast",
 			url: "https://dailyliturgy.com/"
 		});
   };
   const openSupportScreen = (navigation) => {
-    setMenuVisible(false);
-    setAudioStreaming(false);
-    setAudioControlsVisible(false);
+    openScreenFromMenu();
     navigation.navigate("Support");
+  };
+  const openAboutScreen = (navigation) => {
+    openScreenFromMenu();
+    navigation.navigate("About");
   };
 
   return (
@@ -145,6 +153,7 @@ export default function LiturgyNavigator({ liturgy }) {
                 >
                   <Menu.Item onPress={() => openWebsite(navigation)} title="About The Daily Liturgy Podcast" />
                   <Menu.Item onPress={() => openSupportScreen(navigation)} title="Support The Daily Liturgy Podcast" />
+                  <Menu.Item onPress={() => openAboutScreen(navigation)} title="About The Daily Liturgy App" />
                 </Menu>
               )
             })}
@@ -171,6 +180,14 @@ export default function LiturgyNavigator({ liturgy }) {
                 title: "Support the Podcast"
             }}}
           />
+          <Stack.Screen
+            name="About"
+            component={AboutScreen}
+            options={(props) => {
+              return {
+                title: "About the App"
+            }}}
+          />
         </Stack.Navigator>
         <View
           style={styles.fabContainer}
@@ -182,12 +199,13 @@ export default function LiturgyNavigator({ liturgy }) {
             style={styles.smallFab}
             icon={require("../assets/icons8-replay-10-100.png")}
             onPress={() => shiftAudio(-10000)}
-            visible={audioControlsVisible}
+            visible={audioPlayed && audioControlsVisible}
           />
           <FAB
-            style={styles.fab}
+            small={!audioPlayed}
+            style={audioPlayed ? {} : { marginVertical: 5 }}
             theme={fabTheme}
-            label={audioProgress}
+            label={audioPlayed ? audioProgress : ""}
             icon={audioStreaming ?
               require("../assets/icons8-pause-90.png") :
               require("../assets/icons8-play-90.png")
@@ -200,7 +218,7 @@ export default function LiturgyNavigator({ liturgy }) {
             style={styles.smallFab}
             icon={require("../assets/icons8-forward-10-100.png")}
             onPress={() => shiftAudio(10000)}
-            visible={audioControlsVisible}
+            visible={audioPlayed && audioControlsVisible}
           />
 			  </View>
       </NavigationContainer>
