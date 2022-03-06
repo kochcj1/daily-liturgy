@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 30
+    paddingVertical: 30,
+    backgroundColor: "#e2e2e2"
   },
   buttonGrid: {
   },

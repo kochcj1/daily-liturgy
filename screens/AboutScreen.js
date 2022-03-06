@@ -15,7 +15,8 @@ export default function AboutScreen(props) {
 const styles = StyleSheet.create({
 	container: {
     flex: 1,
-    margin: 25
+    padding: 25,
+    backgroundColor: '#e2e2e2'
   },
   text: {
     fontSize: 16,
