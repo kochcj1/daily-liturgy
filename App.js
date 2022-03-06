@@ -9,7 +9,6 @@ import * as cheerio from 'cheerio';
 import DeviceInfoContext from './contexts/DeviceInfoContext';
 
 // TODO:
-// - Still allow the app to work even if Stripe and Apple Pay aren't available at the moment
 // - Splash screen on landscape tablet seems distorted
 // - Test on physical devices (is the following covered by AppLoading already?...especially handling of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
 // - Publish the app
