@@ -1,7 +1,8 @@
-import React, { useState, useRef, Fragment } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { Button, DefaultTheme } from 'react-native-paper';
-import { Alert, StyleSheet, View, FlatList } from 'react-native';
-import { ApplePayButton, useApplePay } from '@stripe/stripe-react-native';
+import { Alert, StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
+import { initStripe, ApplePayButton, useApplePay } from '@stripe/stripe-react-native';
+import fetchPublishableKey from '../donations/fetchPublishableKey';
 import fetchPaymentIntentClientSecret from '../donations/fetchPaymentIntentClientSecret';
 import CurrencyInput from 'react-native-currency-input';
 
@@ -14,19 +15,30 @@ const donationButtonTheme = {
 };
 
 export default function SupportScreen({ navigation }) {
+  const [isLoading, setLoading] = useState(true);
+  const [publishableKey, setPublishableKey] = useState(undefined);
+  useEffect(() => {
+    // TODO: get merchant identifier
+    const init = async () => {
+      const publishableKey = await fetchPublishableKey();
+      if (publishableKey) {
+        await initStripe({
+          publishableKey,
+          merchantIdentifier: "merchant.com.stripe.react.native"
+        });
+        setPublishableKey(publishableKey);
+      }
+      setLoading(false);
+    };
+
+    init();
+  }, []);
+
   const {
     presentApplePay,
     confirmApplePayPayment,
     isApplePaySupported
   } = useApplePay();
-
-  // Commenting this out for now because alert is showing up on devices
-  // that do support Apple Pay... probably just better to show some text
-  // in the GUI indicating that Apple Pay isn't supported
-  /*if (!isApplePaySupported) {
-    // TODO: fix the fact that user has to dismiss this twice
-    Alert.alert("Error", "Apple Pay isn't supported on this device");
-  }*/
 
   const customDonationOption = "🤔";
   const donationOptions = ["$1.99", "$4.99", "$14.99", "$24.99", "$49.99", customDonationOption];
@@ -85,7 +97,16 @@ export default function SupportScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {isApplePaySupported && (
+      {isLoading &&
+        <ActivityIndicator
+          style={styles.loadingIndicator}
+           color="#8f6b50"
+           size="large"
+        />
+      }
+      {!isLoading &&
+        publishableKey &&
+        isApplePaySupported && (
         <Fragment>
           <FlatList
             style={styles.buttonGrid}
@@ -151,6 +172,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 30,
     backgroundColor: "#e2e2e2"
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
   },
   buttonGrid: {
   },
