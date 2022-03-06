@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AppLoading from 'expo-app-loading';
+import * as Device from 'expo-device';
 import * as Font from 'expo-font';
 import LiturgyNavigator from './screens/LiturgyNavigator';
 import { initStripe } from '@stripe/stripe-react-native';
 import { Audio } from 'expo-av';
 import * as cheerio from 'cheerio';
 import fetchPublishableKey from './donations/fetchPublishableKey';
+import DeviceInfoContext from './contexts/DeviceInfoContext';
 
 // TODO:
-// - Donation buttons' primary color should be white or something?
 // - Still allow the app to work even if Stripe and Apple Pay aren't available at the moment
-// - Bigger default font on tablet (see https://stackoverflow.com/a/44563995/3987765)
+// - Donation buttons' primary color should be white or something?
 // - Splash screen on landscape tablet seems distorted
 // - Test on physical devices (is the following covered by AppLoading already?...especially handling of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
 // - Publish the app
@@ -33,6 +34,8 @@ async function loadAsync() {
       merchantIdentifier: "merchant.com.stripe.react.native"
     });
   }
+
+  const deviceInfo = { deviceType: await Device.getDeviceTypeAsync() };
 
   await Font.loadAsync({
     "Roboto-Mono": require('./assets/fonts/Roboto_Mono/static/RobotoMono-Medium.ttf'),
@@ -60,17 +63,20 @@ async function loadAsync() {
   );
 
   await new Promise(resolve => setTimeout(resolve, 1000));
-  return { ...liturgy, audio }
+  return { ...liturgy, audio, deviceInfo }
 };
 
 export default function App() {
   const [appLoaded, setAppLoaded] = useState(false);
+  const [deviceInfo, setDeviceInfo] = useState({});
   const [liturgy, setLiturgy] = useState(null);
 
   if (appLoaded) {   
     return (
       <PaperProvider>
-        <LiturgyNavigator liturgy={liturgy} />
+        <DeviceInfoContext.Provider value={deviceInfo}>
+          <LiturgyNavigator liturgy={liturgy} />
+        </DeviceInfoContext.Provider>
       </PaperProvider>
     );
   }
@@ -78,7 +84,9 @@ export default function App() {
   return (
     <AppLoading 
       startAsync={async () => {
-        setLiturgy(await loadAsync());
+        const { deviceInfo, ...liturgy } = await loadAsync();
+        setLiturgy(liturgy);
+        setDeviceInfo(deviceInfo);
       }}
       onFinish={() => setAppLoaded(true)}
       onError={(error) => alert(error)}

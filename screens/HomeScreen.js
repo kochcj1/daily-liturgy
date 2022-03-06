@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Avatar, Card, Paragraph, Button } from 'react-native-paper';
+import * as Device from 'expo-device';
+import DeviceInfoContext from '../contexts/DeviceInfoContext';
 
 const BaseAvatar = props => <Avatar.Icon {...props} backgroundColor="#8f6b50" />
 const PrayerAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-pray-64.png')} />
@@ -10,6 +12,12 @@ const ReadingAvatar = props => <BaseAvatar {...props} icon={require('../assets/i
 const BenedictionAvatar = props => <BaseAvatar {...props} icon={require('../assets/icons8-gift-96.png')} />
 
 export default function HomeScreen({ navigation, liturgy, onFocus=null }) {
+	const deviceInfo = useContext(DeviceInfoContext);
+	const deviceType = deviceInfo.deviceType;
+	const textStyle = { fontSize : deviceType === Device.DeviceType.PHONE ?
+		16 : 18
+	};
+
 	const openScripture = (passage) => {
 		navigation.navigate("Web", {
 			title: passage,
@@ -31,14 +39,14 @@ export default function HomeScreen({ navigation, liturgy, onFocus=null }) {
 					<Card>
 						<Card.Title title="Opening Prayer" left={PrayerAvatar} />
 						<Card.Content>
-							<Paragraph>{liturgy.openingPrayer}</Paragraph>
+							<Paragraph style={textStyle}>{liturgy.openingPrayer}</Paragraph>
 						</Card.Content>
 					</Card>
 					<View style={styles.verticalSpacer} />
 					<Card>
 						<Card.Title titleNumberOfLines={2} title="Confession of Sin and Prayer for Grace" left={PrayerAvatar} />
 						<Card.Content>
-							<Paragraph>{liturgy.confessionOfSinAndPrayerForGrace}</Paragraph>
+							<Paragraph style={textStyle}>{liturgy.confessionOfSinAndPrayerForGrace}</Paragraph>
 						</Card.Content>
 					</Card>
 					<View style={styles.verticalSpacer} />
@@ -52,7 +60,7 @@ export default function HomeScreen({ navigation, liturgy, onFocus=null }) {
 					<Card>
 						<Card.Title title="The Lord's Prayer" left={PrayerAvatar} />
 						<Card.Content>
-							<Paragraph>{liturgy.theLordsPrayer}</Paragraph>
+							<Paragraph style={textStyle}>{liturgy.theLordsPrayer}</Paragraph>
 						</Card.Content>
 					</Card>
 					<View style={styles.verticalSpacer} />
@@ -66,7 +74,7 @@ export default function HomeScreen({ navigation, liturgy, onFocus=null }) {
 					<Card>
 						<Card.Title title="Prayer of Adoration" left={PrayerAvatar} />
 						<Card.Content>
-							<Paragraph>{liturgy.prayerOfAdoration}</Paragraph>
+							<Paragraph style={textStyle}>{liturgy.prayerOfAdoration}</Paragraph>
 						</Card.Content>
 					</Card>
 					<View style={styles.verticalSpacer} />
@@ -80,14 +88,14 @@ export default function HomeScreen({ navigation, liturgy, onFocus=null }) {
 					<Card>
 						<Card.Title title="Prayer of Consecration" left={PrayerAvatar} />
 						<Card.Content>
-							<Paragraph>{liturgy.prayerOfConsecration}</Paragraph>
+							<Paragraph style={textStyle}>{liturgy.prayerOfConsecration}</Paragraph>
 						</Card.Content>
 					</Card>
 					<View style={styles.verticalSpacer} />
 					<Card>
 						<Card.Title title="Benediction" left={BenedictionAvatar} />
 						<Card.Content>
-							<Paragraph>{liturgy.benediction}</Paragraph>
+							<Paragraph style={textStyle}>{liturgy.benediction}</Paragraph>
 						</Card.Content>
 					</Card>
 					<View style={styles.verticalSpacer} />
