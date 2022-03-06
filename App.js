@@ -24,15 +24,13 @@ import fetchPublishableKey from './donations/fetchPublishableKey';
 // - A reminder to rate the app (but not the first time, after regular usage)
 
 async function loadAsync() {
-  // TODO: get merchant identifier (and URL scheme?)
+  // TODO: get merchant identifier
   // TODO: only do this if user accesses payment screen (rather than on app load)
   const publishableKey = await fetchPublishableKey();
   if (publishableKey) {
     await initStripe({
       publishableKey,
-      merchantIdentifier: "merchant.com.stripe.react.native",
-      urlScheme: "stripe-example",
-      setUrlSchemeOnAndroid: true,
+      merchantIdentifier: "merchant.com.stripe.react.native"
     });
   }
 
