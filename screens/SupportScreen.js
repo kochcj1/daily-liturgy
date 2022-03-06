@@ -1,9 +1,17 @@
 import React, { useState, useRef, Fragment } from 'react';
-import { Button } from 'react-native-paper';
+import { Button, DefaultTheme } from 'react-native-paper';
 import { Alert, StyleSheet, View, FlatList } from 'react-native';
 import { ApplePayButton, useApplePay } from '@stripe/stripe-react-native';
 import fetchPaymentIntentClientSecret from '../donations/fetchPaymentIntentClientSecret';
 import CurrencyInput from 'react-native-currency-input';
+
+const donationButtonTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "white"
+  }
+};
 
 export default function SupportScreen({ navigation }) {
   const {
@@ -55,6 +63,7 @@ export default function SupportScreen({ navigation }) {
   const renderDonationOption = ({ item: donationOption }) => (
     <Button
       style={styles.button}
+      theme={donationButtonTheme}
       labelStyle={{
         color: "white",
         fontSize: donationOption === customDonationOption ? 20 : 16
