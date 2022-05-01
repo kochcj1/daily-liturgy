@@ -9,16 +9,21 @@ import * as cheerio from 'cheerio';
 import DeviceInfoContext from './contexts/DeviceInfoContext';
 
 // TODO:
-// - Splash screen on landscape tablet seems distorted
-// - Test on physical devices (is the following covered by AppLoading already?...especially handling of internet connectivity and/or lack of being able to parse out the information we need (catch and throw more descriptive errors that onError will take care of showing the user)
+// - Test on physical devices
+// - Test app without internet connectivity
+// - Test failure to load/parse data from their website
+// - The image used on the splash screen seems distorted on a tablet when in landscape orientation
 // - Publish the app
 
 // Wishlist:
+// - Use Squarespace's API to fetch data instead of parsing the podcast's website
 // - Settings (e.g. font)
 // - Scroll to content as audio is being played (using Aeneas Vagrant, for example)
-//   - Option to automatically pause after a certain place in the app (and maybe add an actual card there for personal prayer... card can link to the setting in case they want to change that)
+//   - Option to automatically pause after a certain place in the app (and maybe add
+//     an actual card there for personal prayer... card can link to the setting in case
+//     they want to change that)
 // - A way to share a link to the app in the App Store
-// - A reminder to rate the app (but not the first time, after regular usage)
+// - A reminder to rate the app (but not the first time the app is used, only after regular usage)
 
 async function loadAsync() {
   const deviceInfo = { deviceType: await Device.getDeviceTypeAsync() };

@@ -18,10 +18,12 @@ export default function SupportScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [publishableKey, setPublishableKey] = useState(undefined);
   useEffect(() => {
-    // TODO: get merchant identifier
     const init = async () => {
       const publishableKey = await fetchPublishableKey();
       if (publishableKey) {
+        // TODO: generate an actual merchant identifier instead of using
+        // this one that's provided for testing purposes. See
+        // https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay.
         await initStripe({
           publishableKey,
           merchantIdentifier: "merchant.com.stripe.react.native"
