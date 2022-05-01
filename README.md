@@ -8,7 +8,7 @@ Unfortunately, as the app neared completion, those responsible for managing The 
 
 ## Demo
 
-Placeholder
+https://user-images.githubusercontent.com/20493743/166129914-e1ef5238-2f1f-42be-8cc0-b1d9c97b8db7.mp4
 
 ## Setup
 
