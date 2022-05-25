@@ -2,9 +2,10 @@
   "expo": {
     "name": "Daily Liturgy",
     "slug": "dailyliturgy",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Daily_Liturgy_Logo_Small.png",
+    "icon": "./assets/Daily_Liturgy_Logo_Small_No_Alpha.png",
     "splash": {
       "image": "./assets/Daily_Liturgy_Logo.png",
       "backgroundColor": "#ffffff"
@@ -17,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dailyliturgy"
+      "bundleIdentifier": "com.app.dailyliturgy"
     },
     "android": {
       "adaptiveIcon": {
