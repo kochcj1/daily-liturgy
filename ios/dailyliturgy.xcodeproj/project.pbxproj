@@ -328,7 +328,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dailyliturgy;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.app.dailyliturgy";
 				PRODUCT_NAME = dailyliturgy;
 				SWIFT_OBJC_BRIDGING_HEADER = "DailyLiturgy/DailyLiturgy-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -354,7 +354,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dailyliturgy;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.app.dailyliturgy";
 				PRODUCT_NAME = dailyliturgy;
 				SWIFT_OBJC_BRIDGING_HEADER = "DailyLiturgy/DailyLiturgy-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
