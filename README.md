@@ -6,6 +6,8 @@ In addition to providing a way to listen to and/or read along with the current d
 
 Unfortunately, as the app neared completion, those responsible for managing The Daily Liturgy Podcast did not feel that they had the time to manage the app once it was released. As a result, this app has not yet been published to the App Store.
 
+A SwiftUI-based version of this app can be found [here](https://github.com/kochcj1/daily-liturgy-swiftui).
+
 ## Demo
 
 https://user-images.githubusercontent.com/20493743/166129914-e1ef5238-2f1f-42be-8cc0-b1d9c97b8db7.mp4
